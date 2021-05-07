@@ -17,29 +17,29 @@ body {
   @apply text-light-100;
 }
 
-button[data-button*='lg'] {
+[data-button*='lg'] {
   @apply py-4;
   @apply px-12;
 }
-button[data-button*='md'] {
+[data-button*='md'] {
   @apply py-2;
   @apply px-10;
 }
 
-button[data-button*='sm'] {
+[data-button*='sm'] {
   @apply py-1;
   @apply px-2;
 }
 
-button[data-button*='btn'] {
-  @apply rounded-lg;
+[data-button*='btn'] {
+  @apply rounded-lg font-semibold;
 }
-button[data-button*='primary'] {
+[data-button*='primary'] {
   @apply bg-primary-700;
   @apply text-light-100;
   @apply border border-2 border-primary-700;
 }
 
-button[data-button$='outline'] {
+[data-button$='outline'] {
   @apply bg-transparent-900 border border-2 text-primary-700 !important;
 }
