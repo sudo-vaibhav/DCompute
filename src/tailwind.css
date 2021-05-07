@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-display;
+}
+
+body {
+  @apply font-body;
+  @apply text-light-100;
+}
+
+button[data-button*='lg'] {
+  @apply py-4;
+  @apply px-12;
+}
+button[data-button*='md'] {
+  @apply py-2;
+  @apply px-10;
+}
+
+button[data-button*='sm'] {
+  @apply py-1;
+  @apply px-2;
+}
+
+button[data-button*='btn'] {
+  @apply rounded-lg;
+}
+button[data-button*='primary'] {
+  @apply bg-primary-700;
+  @apply text-light-100;
+  @apply border border-2 border-primary-700;
+}
+
+button[data-button$='outline'] {
+  @apply bg-transparent-900 border border-2 text-primary-700 !important;
+}
