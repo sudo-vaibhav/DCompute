@@ -2,12 +2,17 @@ import { NavLink } from 'react-router-dom'
 import FeatherIcon from 'feather-icons-react'
 const Sidebar = () => {
   return (
-    <div className="h-full fixed bg-dark-700 col-start-1 col-span-1 flex-col flex justify-center items-center">
+    <div
+      className="h-full text-center fixed bg-dark-700 flex-col flex justify-center items-center"
+      style={{
+        width: 'calc(100vw / 18)',
+      }}
+    >
       {[
         { icon: 'dollar-sign', text: 'Get Paid', to: 'jobs' },
         {
           icon: 'plus-circle',
-          text: 'Deploy Job',
+          text: 'Compute',
           to: 'deploy-job',
         },
         {
@@ -17,7 +22,7 @@ const Sidebar = () => {
         },
         {
           icon: 'map-pin',
-          text: 'Map View',
+          text: 'Map',
           to: 'map',
         },
       ].map((e) => {

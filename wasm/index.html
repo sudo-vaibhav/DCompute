@@ -10,45 +10,44 @@
     <p class="title">Web Assembly Example</p>
 
     <script>
-      // WebAssembly.instantiateStreaming(fetch('./build/optimized.wasm'), {
-      //   main: {
-      //     sayHello() {
-      //       console.log('Hello from WebAssembly!')
-      //     },
-      //   },
-      //   env: {
-      //     abort(_msg, _file, line, column) {
-      //       console.error('abort called at main.ts:' + line + ':' + column)
-      //     },
-      //   },
-      // })
-      //   .then((result) => {
-      //     const exports = result.instance.exports
-      //     document.getElementById('container').textContent =
-      //       'Result: ' + exports.add(19, 23)
-      //   })
-      //   .catch(console.error)
+      let startTime, endTime
+      let result = ''
+
+      const pre = () => {
+        result += 'running WASM binary ✓\n'
+        startTime = new Date()
+        result += `started at ${startTime.toLocaleString()}\n`
+      }
+
+      const post = () => {
+        endTime = new Date()
+        result += `finished at ${endTime.toLocaleString()}\n`
+        const diff = endTime - startTime
+        result += `processed in ${diff} milliseconds\n`
+      }
+
       fetch('./build/optimized.wasm')
         .then((response) => response.arrayBuffer())
         .then((bytes) =>
-          WebAssembly.instantiate(
-            bytes,
-            // {
-            //   main: {
-            //     sayHello() {
-            //       console.log('Hello from WebAssembly!')
-            //     },
-            //   },
-            // env: {
-            //   abort(_msg, _file, line, column) {
-            //     console.error('abort called at main.ts:' + line + ':' + column)
-            //   },
-            // },
-            // }
-          ),
+          WebAssembly.instantiate(bytes, {
+            index: {},
+            env: {
+              abort(_msg, _file, line, column) {
+                console.error('abort called at main.ts:' + line + ':' + column)
+              },
+            },
+          }),
         )
         .then((obj) => {
-          console.log(obj.instance.exports.add(19, 23))
+          pre()
+          result +=
+            '=====================\nBEGIN OUTPUT STREAM:\n=====================\n'
+          result += obj.instance.exports.run(20, 23)
+          result +=
+            '\n=====================\nEND OF OUTPUT STREAM:\n=====================\n'
+          post()
+
+          console.log(result)
         })
     </script>
     <p id="container"></p>
