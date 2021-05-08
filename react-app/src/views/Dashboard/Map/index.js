@@ -12,10 +12,16 @@ const Map = () => {
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       //   style: 'mapbox://styles/mapbox/dark-v10',
-      style: 'mapbox://styles/mapbox/navigation-night-v1',
+      style: 'mapbox://styles/mapbox/dark-v10',
       // center: [lng, lat],
-      // zoom: zoom
+      zoom: 2,
+      center: [0, 20],
     })
+
+    // Create a default Marker and add it to the map.
+    var marker1 = new mapboxgl.Marker({ color: 'var(--color-primary-700)' })
+      .setLngLat([77.1607011, 28.6891353])
+      .addTo(map.current)
   })
 
   //   var map = new mapboxgl.Map({

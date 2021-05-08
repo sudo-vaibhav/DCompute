@@ -11,7 +11,7 @@ const MyJobs = () => {
           status: 'done',
         },
         {
-          status: 'deployed',
+          status: 'added',
         },
       ].map((job) => {
         return <MyJobCard job={job} />

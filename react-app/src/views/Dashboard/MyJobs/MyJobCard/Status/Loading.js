@@ -1,8 +1,8 @@
 const Loading = () => {
   return (
     <svg
-      width="32"
-      height="32"
+      width="48"
+      height="48"
       viewBox="0 0 16 16"
       fill="none"
       className="animate-spin"
