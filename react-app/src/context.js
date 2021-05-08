@@ -1,18 +1,18 @@
-import { auth, db } from './firebase'
-
 import { useContext, useState, useEffect, createContext } from 'react'
+import { auth } from './firebase'
+export { auth, db } from './firebase'
 
-const AuthContext = createContext()
+const context = createContext()
 
 export function useAuth() {
-  return useContext(AuthContext)
+  return useContext(context)
 }
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState()
   const [loading, setLoading] = useState(true)
 
-  const signup = (email, password, fullName) => {
+  const signup = (email, password, fullName = '') => {
     let promise = new Promise(function (resolve, reject) {
       auth
         .createUserWithEmailAndPassword(email, password)
@@ -82,8 +82,8 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={value}>
-      {!loading && children}
-    </AuthContext.Provider>
+    <context.Provider value={value}>{!loading && children}</context.Provider>
   )
 }
+
+// export const db

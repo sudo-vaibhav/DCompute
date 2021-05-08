@@ -6,7 +6,7 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom'
-import { AuthProvider } from './authContext'
+import { AuthProvider } from './context'
 
 import ColorGrid from './views/ColorGrid'
 import Home from './views/Home'
@@ -14,7 +14,7 @@ import Navbar from './components/Navbar'
 import SignUp from './views/SignUp'
 import LogIn from './views/LogIn'
 import Dashboard from './views/Dashboard'
-import { useAuth } from './authContext'
+import { useAuth } from './context'
 
 const Routing = () => {
   const { currentUser } = useAuth()
@@ -27,10 +27,10 @@ const Routing = () => {
           <ColorGrid />
         </Route>
         <Route path="/sign-up">
-          {currentUser ? <Redirect to="/dashboard" /> : <SignUp />}
+          {currentUser ? <Redirect to="/dashboard/jobs" /> : <SignUp />}
         </Route>
         <Route path="/log-in">
-          {currentUser ? <Redirect to="/dashboard" /> : <LogIn />}
+          {currentUser ? <Redirect to="/dashboard/jobs" /> : <LogIn />}
         </Route>
         <Route path="/dashboard">
           {currentUser ? <Dashboard /> : <Redirect to="/" />}

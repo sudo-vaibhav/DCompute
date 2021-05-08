@@ -27,24 +27,36 @@ const Auth = ({ title, cta, alterLink }) => {
               </div>
               <Formik
                 initialValues={{
-                  userName: 'sudo-vaibhav',
+                  email: 'mailvaibhavchopra@gmail.com',
                   password: '123456',
+                  userName: 'Vaibhav Chopra',
                 }}
+                onSubmit={cta.handler}
               >
                 {({ values }) => (
                   <Form className="bg-dark-300 my-6 ">
                     {[
                       {
-                        fieldName: 'userName',
-                        icon: 'user',
+                        fieldName: 'email',
+                        icon: 'mail',
                       },
                       {
                         fieldName: 'password',
                         icon: 'lock',
                       },
                     ].map((e, idx) => {
-                      return <FormField fieldName={e.fieldName} icon={e.icon} />
+                      return (
+                        <FormField
+                          key={idx}
+                          fieldName={e.fieldName}
+                          icon={e.icon}
+                        />
+                      )
                     })}
+                    {title === 'register' ? (
+                      <FormField fieldName={'userName'} icon={'user'} />
+                    ) : null}
+
                     <div className="flex items-center my-8 justify-between">
                       <button data-button="btn-primary-lg">{cta.text}</button>
                       <Link

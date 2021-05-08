@@ -26,7 +26,9 @@
         result += `processed in ${diff} milliseconds\n`
       }
 
-      fetch('./build/optimized.wasm')
+      fetch(
+        'https://firebasestorage.googleapis.com/v0/b/dcompute-16d7b.appspot.com/o/1620384144432.wasm?alt=media',
+      )
         .then((response) => response.arrayBuffer())
         .then((bytes) =>
           WebAssembly.instantiate(bytes, {

@@ -1,12 +1,24 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Auth from '../../components/Auth'
+import { useAuth, db } from '../../context'
+import { generateFromString } from 'generate-avatar'
+import { useHistory } from 'react-router-dom'
 
 const SignUp = () => {
+  const [{ latitude, longitude }, setLatLong] = useState({
+    latitude: 0,
+    longitude: 0,
+  })
+  const { signup } = useAuth()
+  const history = useHistory()
   useEffect(() => {
     if ('geolocation' in navigator) {
       /* geolocation is available */
       navigator.geolocation.getCurrentPosition((position) => {
-        console.log(position.coords.latitude, position.coords.longitude)
+        setLatLong({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        })
       })
     } else {
       alert(
@@ -19,7 +31,28 @@ const SignUp = () => {
       title="register"
       cta={{
         text: 'Sign Up',
-        handler: (values) => {},
+        handler: async (values) => {
+          try {
+            console.log('trying to signin up')
+            console.log(values.email, values.password, values.userName)
+            const ref = await signup(
+              values.email,
+              values.password,
+              values.userName,
+            )
+            await db.collection('user').add({
+              uid: ref.user.uid,
+              email: values.email,
+              userName: values.userName,
+              latitude,
+              longitude,
+              avatar: generateFromString(Date.now().toString()),
+            })
+          } catch (err) {
+            console.error(err)
+            alert('error occured while signing up')
+          }
+        },
       }}
       alterLink={{
         text: 'Log In',

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Card from '../../../../components/Card'
 import FeatherIcon from 'feather-icons-react'
 import Loading from './status/Loading'
@@ -11,11 +12,13 @@ const MyJobCard = ({ job }) => {
     added: '#537AE0',
   }
 
+  const [clicked, setClicked] = useState(false)
+
   return (
     <Card className="pt-8 w-full">
       <div className="flex flex-col">
         <div className="flex w-full justify-between items-center">
-          <h4 className="font-semibold text-lg">One Billionth Prime Number</h4>
+          <h4 className="font-semibold text-lg">{job.name}</h4>
           <div className="" style={{ width: 40, height: 40 }}>
             {job.status === 'done' ? (
               <Done />
@@ -44,30 +47,49 @@ const MyJobCard = ({ job }) => {
               <div
                 style={{
                   maxHeight: 250,
-                  overflowY: 'auto',
+                  overflowY: clicked ? 'auto' : 'hidden',
                 }}
                 className="bg-dark-900 text-light-100 p-8 my-4 rounded-lg relative"
               >
                 {/* Overlay */}
                 {job.status === 'done' && (
                   <div
-                    className="absolute top-0 left-0 right-0 bottom-0 z-10 grid place-items-center text-xl"
+                    className="absolute top-0 left-0 right-0 h-full z-10 grid place-items-center text-xl"
                     style={{
                       background: 'rgba(0,0,0,0.9)',
+                      opacity: clicked ? 0 : 1,
+                      pointerEvents: clicked ? 'none' : 'auto',
+                      // pointer,
                     }}
+                    onClick={() => setClicked(true)}
                   >
                     Click here to pay and view output
                   </div>
                 )}
                 <>
-                  <FeatherIcon
-                    icon="copy"
+                  <button
                     className="absolute top-0 right-0 m-8"
-                  />
+                    onClick={() => {
+                      navigator.clipboard.writeText(job.logs)
+                    }}
+                  >
+                    <FeatherIcon icon="copy" />
+                  </button>
                   <code>
                     job request received ✓ <br />
                     job deployed ✓ <br />
-                    running WASM binary ...
+                    {job.status === 'processing' || job.status === 'done' ? (
+                      <>
+                        running WASM binary ... <br />
+                      </>
+                    ) : null}
+                    {job.status === 'done' && (
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: job.logs.replaceAll('\n', '<br/>'),
+                        }}
+                      />
+                    )}
                   </code>
                 </>
               </div>

@@ -1,4 +1,6 @@
 import { useRef, useEffect } from 'react'
+import { db } from '../../../context'
+
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js'
 const Map = () => {
   // pk.eyJ1IjoidmFpYmhhdmNob3ByYTIwMDEiLCJhIjoiY2tvZGpzcXpzMDJsNjJ3cGxzcnoybmw0bSJ9.kr-wnzpPS3RasbmNM80mbQ
@@ -19,9 +21,22 @@ const Map = () => {
     })
 
     // Create a default Marker and add it to the map.
-    var marker1 = new mapboxgl.Marker({ color: 'var(--color-primary-700)' })
-      .setLngLat([77.1607011, 28.6891353])
-      .addTo(map.current)
+
+    db.collection('user')
+      .get()
+      .then((querySnapshot) => {
+        console.log(
+          querySnapshot.docs.forEach((doc) => {
+            const data = doc.data()
+            var marker1 = new mapboxgl.Marker({
+              color: 'var(--color-primary-700)',
+            })
+              .setLngLat([data.longitude, data.latitude])
+              .addTo(map.current)
+            // doc.data()
+          }),
+        )
+      })
   })
 
   //   var map = new mapboxgl.Map({
