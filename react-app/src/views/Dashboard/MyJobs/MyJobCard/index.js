@@ -12,7 +12,7 @@ import getGoldToken from '../getGoldToken'
 const web3 = new Web3('https://alfajores-forno.celo-testnet.org')
 const kit = ContractKit.newKitFromWeb3(web3)
 
-const MyJobCard = ({ job }) => {
+const MyJobCard = ({ job, showModal }) => {
   const statusColorMap = {
     done: '#299234',
     processing: '#D29C0E',
@@ -27,19 +27,19 @@ const MyJobCard = ({ job }) => {
 
   useEffect(() => {
     db.collection('user')
-      .where('uid', '==', job.creator)
+      .where('uid', '==', job.finisher || currentUser.uid)
       .get()
       .then((querySnapshot) => {
-        let creatorDoc
+        let finisherDoc
         querySnapshot.forEach((doc) => {
-          creatorDoc = {
+          finisherDoc = {
             ...doc.data(),
             id: doc.id,
           }
         })
         setState({
           clicked,
-          recepient: creatorDoc,
+          recepient: finisherDoc,
         })
       })
   }, [currentUser.uid, job.creator])
@@ -77,12 +77,12 @@ const MyJobCard = ({ job }) => {
               <div
                 style={{
                   maxHeight: 250,
-                  overflowY: clicked ? 'auto' : 'hidden',
+                  overflowY: job.paid ? 'auto' : 'hidden',
                 }}
                 className="bg-dark-900 text-light-100 p-8 my-4 rounded-lg relative"
               >
                 {/* Overlay */}
-                {job.status === 'done' && (
+                {job.status === 'done' && !job.paid && (
                   <div
                     className="absolute top-0 left-0 right-0 h-full z-10 grid place-items-center text-xl"
                     style={{
@@ -95,51 +95,62 @@ const MyJobCard = ({ job }) => {
                       const secretKey = window.localStorage.getItem(
                         'celoSecretKey',
                       )
-                      try {
-                        const account = web3.eth.accounts.privateKeyToAccount(
-                          secretKey,
-                        )
+                      // try {
+                      const account = web3.eth.accounts.privateKeyToAccount(
+                        secretKey,
+                      )
 
-                        kit.connection.addAccount(account.privateKey)
+                      kit.connection.addAccount(account.privateKey)
 
-                        // 12. Specify recipient Address
-                        let recepientAddress = recepient.celoAddress
+                      // alert(
+                      //   `sending to ${job.finisher} with address ${recepient.celoAddress} from ${account.address} an amount of ${job.price}`,
+                      // )
 
-                        // 13. Specify an amount to send
-                        let amount = job.price
-                        // 14. Get the token contract wrappers
-                        let goldtoken = getGoldToken()
-                        // await kit.contracts.getGoldToken()
+                      // 12. Specify recipient Address
+                      let recepientAddress = recepient.celoAddress
 
-                        // 15. Transfer CELO and cUSD from your account to anAddress
-                        let celotx = await goldtoken
-                          .transfer(recepientAddress, amount)
-                          .send({ from: account.address })
+                      // 13. Specify an amount to send
+                      let amount = job.price
+                      // 14. Get the token contract wrappers
+                      let goldtoken = await kit.contracts.getGoldToken()
 
-                        // 16. Wait for the transactions to be processed
-                        let celoReceipt = await celotx.waitReceipt()
+                      // 15. Transfer CELO and cUSD from your account to anAddress
+                      let celotx = await goldtoken
+                        .transfer(recepientAddress, amount)
+                        .send({ from: account.address })
 
-                        // 17. Print receipts
-                        console.log('CELO Transaction receipt: %o', celoReceipt)
+                      // 16. Wait for the transactions to be processed
+                      let celoReceipt = await celotx.waitReceipt()
 
-                        // 18. Get your new balances
-                        let celoBalance = await goldtoken.balanceOf(
-                          account.address,
-                        )
+                      // 17. Print receipts
+                      console.log('CELO Transaction receipt: %o', celoReceipt)
 
-                        // 19. Print new balances
-                        console.log(
-                          `Your new account CELO balance: ${celoBalance.toString()}`,
-                        )
+                      // 18. Get your new balances
+                      let celoBalance = await goldtoken.balanceOf(
+                        account.address,
+                      )
 
-                        console.log(account)
-                        setState({
-                          recepient,
-                          clicked: true,
-                        })
-                      } catch (err) {
-                        alert('incorrect private key')
-                      }
+                      showModal(
+                        `Your new account CELO balance: ${celoBalance.toString()}`,
+                      )
+                      // 19. Print new balances
+                      // alert(
+                      //   `Your new account CELO balance: ${celoBalance.toString()}`,
+                      // )
+
+                      await db.collection('job').doc(job.id).update({
+                        paid: true,
+                      })
+
+                      console.log(account)
+                      setState({
+                        recepient,
+                        clicked: true,
+                      })
+                      // } catch (err) {
+                      //   console.log(err)
+                      //   alert('incorrect private key')
+                      // }
                     }}
                   >
                     Click here to pay and view output

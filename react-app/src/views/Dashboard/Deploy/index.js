@@ -45,10 +45,10 @@ const Deploy = () => {
         <Card className="my-4">
           <Formik
             initialValues={{
-              name: 'Finding the one billionth prime number',
+              name: 'Help me add these two very big numbers',
               description:
-                'Help me find the one billionth prime number. I need it for my elliptic curve cyptography research paper',
-              price: '2000',
+                'Help me find the sum of these very big numbers, I will compensate you generously in return',
+              price: '20000000000',
               inputData: '10,20',
             }}
             onSubmit={async (values, { setSubmitting }) => {

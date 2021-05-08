@@ -49,6 +49,7 @@ const Jobs = () => {
   }
   useEffect(() => {
     db.collection('job')
+      .where('status', '==', 'added')
       .get()
       .then((querySnapshot) => {
         const jobDocs = []
@@ -75,7 +76,7 @@ const Jobs = () => {
   return (
     <div className="container mx-auto grid lg:grid-cols-2 place-items-start gap-6">
       {jobs
-        .filter((job) => job.creator !== currentUser.uid) // ignoring own jobs
+        // .filter((job) => job.creator !== currentUser.uid) // ignoring own jobs
         .map((job, e) => {
           const creator = users.find((user) => user.uid === job.creator)
 
@@ -136,10 +137,11 @@ const Jobs = () => {
                     post()
 
                     console.log(result)
-                    await db
-                      .collection('job')
-                      .doc(job.id)
-                      .update({ logs: result, status: 'done' })
+                    await db.collection('job').doc(job.id).update({
+                      logs: result,
+                      status: 'done',
+                      finisher: currentUser.uid,
+                    })
 
                     setState({
                       jobs,
