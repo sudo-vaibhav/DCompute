@@ -56,18 +56,19 @@ const Deploy = () => {
                 setSubmitting(true)
                 const data = {
                   ...values,
-                  amount: parseFloat(values.price),
                   logs: '',
                   inputData: JSON.parse(`[${values.inputData}]`),
                   code,
                   status: 'added',
                   creator: currentUser.uid,
+                  price: parseFloat(values.price),
                 }
                 const resp = await axios.post('/wasm', data)
                 console.log(resp.fileName)
 
                 await db.collection('job').add({
                   ...data,
+                  paid: false,
                   fileName: resp.fileName,
                 })
 

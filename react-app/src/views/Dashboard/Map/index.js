@@ -11,6 +11,7 @@ const Map = () => {
 
   useEffect(() => {
     if (map.current) return // initialize map only once
+
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       //   style: 'mapbox://styles/mapbox/dark-v10',
@@ -20,23 +21,33 @@ const Map = () => {
       center: [0, 20],
     })
 
-    // Create a default Marker and add it to the map.
-
     db.collection('user')
       .get()
       .then((querySnapshot) => {
-        console.log(
-          querySnapshot.docs.forEach((doc) => {
-            const data = doc.data()
-            var marker1 = new mapboxgl.Marker({
-              color: 'var(--color-primary-700)',
-            })
-              .setLngLat([data.longitude, data.latitude])
-              .addTo(map.current)
-            // doc.data()
-          }),
-        )
+        querySnapshot.forEach((doc) => {
+          const data = doc.data()
+          var marker1 = new mapboxgl.Marker({
+            color: 'var(--color-primary-700)',
+          })
+            .setLngLat([data.longitude, data.latitude])
+            .addTo(map.current)
+          // doc.data()
+        })
       })
+    ;[
+      [77.0365, 38.8977],
+      [139.6503, 35.6762],
+      [55.2744, 25.1972],
+      [43.1729, 22.9068],
+      [37.6173, 55.7558],
+      [75.6972, 45.4215],
+    ].forEach((coord) => {
+      new mapboxgl.Marker({
+        color: 'var(--color-primary-700)',
+      })
+        .setLngLat(coord)
+        .addTo(map.current)
+    })
   })
 
   //   var map = new mapboxgl.Map({

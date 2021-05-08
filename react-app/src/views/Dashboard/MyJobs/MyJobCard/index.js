@@ -1,9 +1,16 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useAuth } from '../../../../context'
 import Card from '../../../../components/Card'
 import FeatherIcon from 'feather-icons-react'
 import Loading from './status/Loading'
 import Done from './status/Done'
 import Added from './status/Added'
+import { db } from '../../../../context'
+import * as ContractKit from '@celo/contractkit'
+import Web3 from 'web3'
+import getGoldToken from '../getGoldToken'
+const web3 = new Web3('https://alfajores-forno.celo-testnet.org')
+const kit = ContractKit.newKitFromWeb3(web3)
 
 const MyJobCard = ({ job }) => {
   const statusColorMap = {
@@ -12,7 +19,30 @@ const MyJobCard = ({ job }) => {
     added: '#537AE0',
   }
 
-  const [clicked, setClicked] = useState(false)
+  const { currentUser } = useAuth()
+  const [{ clicked, recepient }, setState] = useState({
+    clicked: false,
+    recepient: null,
+  })
+
+  useEffect(() => {
+    db.collection('user')
+      .where('uid', '==', job.creator)
+      .get()
+      .then((querySnapshot) => {
+        let creatorDoc
+        querySnapshot.forEach((doc) => {
+          creatorDoc = {
+            ...doc.data(),
+            id: doc.id,
+          }
+        })
+        setState({
+          clicked,
+          recepient: creatorDoc,
+        })
+      })
+  }, [currentUser.uid, job.creator])
 
   return (
     <Card className="pt-8 w-full">
@@ -61,7 +91,56 @@ const MyJobCard = ({ job }) => {
                       pointerEvents: clicked ? 'none' : 'auto',
                       // pointer,
                     }}
-                    onClick={() => setClicked(true)}
+                    onClick={async () => {
+                      const secretKey = window.localStorage.getItem(
+                        'celoSecretKey',
+                      )
+                      try {
+                        const account = web3.eth.accounts.privateKeyToAccount(
+                          secretKey,
+                        )
+
+                        kit.connection.addAccount(account.privateKey)
+
+                        // 12. Specify recipient Address
+                        let recepientAddress = recepient.celoAddress
+
+                        // 13. Specify an amount to send
+                        let amount = job.price
+                        // 14. Get the token contract wrappers
+                        let goldtoken = getGoldToken()
+                        // await kit.contracts.getGoldToken()
+
+                        // 15. Transfer CELO and cUSD from your account to anAddress
+                        let celotx = await goldtoken
+                          .transfer(recepientAddress, amount)
+                          .send({ from: account.address })
+
+                        // 16. Wait for the transactions to be processed
+                        let celoReceipt = await celotx.waitReceipt()
+
+                        // 17. Print receipts
+                        console.log('CELO Transaction receipt: %o', celoReceipt)
+
+                        // 18. Get your new balances
+                        let celoBalance = await goldtoken.balanceOf(
+                          account.address,
+                        )
+
+                        // 19. Print new balances
+                        console.log(
+                          `Your new account CELO balance: ${celoBalance.toString()}`,
+                        )
+
+                        console.log(account)
+                        setState({
+                          recepient,
+                          clicked: true,
+                        })
+                      } catch (err) {
+                        alert('incorrect private key')
+                      }
+                    }}
                   >
                     Click here to pay and view output
                   </div>

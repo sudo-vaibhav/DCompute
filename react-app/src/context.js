@@ -45,6 +45,7 @@ export function AuthProvider({ children }) {
   }
 
   const signout = () => {
+    window.localStorage.removeItem('celoSecretKey')
     return auth.signOut()
   }
 

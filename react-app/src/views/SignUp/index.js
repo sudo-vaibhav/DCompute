@@ -29,6 +29,13 @@ const SignUp = () => {
   return (
     <Auth
       title="register"
+      extras={[
+        {
+          fieldName: 'celoAddress',
+          icon: 'inbox',
+          initialValue: '0x664915C9Ce6f9f7DD19d446cc9c9650C34eA36C3',
+        },
+      ]}
       cta={{
         text: 'Sign Up',
         handler: async (values) => {

@@ -7,7 +7,10 @@ const JobCard = ({ job, creator, onClick }) => {
         <div className="flex flex-col w-full ">
           <div className="flex font-semibold text-lg items-center">
             <h4 className=" flex-grow">{job.name}</h4>
-            <div className="text-primary-700 text-2xl">{job.price} ETH</div>
+            <div className="text-primary-700 text-lg">
+              {job.price} CELO
+              <span className="text-sm"> Wei</span>
+            </div>
           </div>
           <div className="my-4">
             <div className="flex pl-0 p-2 items-center mr-auto">

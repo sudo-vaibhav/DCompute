@@ -4,7 +4,13 @@ import image from './image.svg'
 import Card from '../Card'
 import FormField from '../FormField'
 
-const Auth = ({ title, cta, alterLink }) => {
+const Auth = ({ title, cta, alterLink, extra = [] }) => {
+  const extraFields = {}
+
+  extra.forEach((extraField) => {
+    extraFields[extraField.fieldName] = extraField.initialValue
+  })
+
   return (
     <div
       style={{
@@ -30,6 +36,7 @@ const Auth = ({ title, cta, alterLink }) => {
                   email: 'mailvaibhavchopra@gmail.com',
                   password: '123456',
                   userName: 'Vaibhav Chopra',
+                  ...extraFields,
                 }}
                 onSubmit={cta.handler}
               >
@@ -44,6 +51,8 @@ const Auth = ({ title, cta, alterLink }) => {
                         fieldName: 'password',
                         icon: 'lock',
                       },
+
+                      ...extra,
                     ].map((e, idx) => {
                       return (
                         <FormField
