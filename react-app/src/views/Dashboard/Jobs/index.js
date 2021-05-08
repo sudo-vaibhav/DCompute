@@ -24,7 +24,7 @@ const Jobs = () => {
                       Vaibhav Chopra
                     </div>
                   </div>
-                  <p className="my-4">
+                  <p className="my-4 w-2/3">
                     Help me find the one billionth prime number. I need it for
                     my elliptic curve cyptography research paper
                   </p>

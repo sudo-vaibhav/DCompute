@@ -1,6 +1,8 @@
 import logo from './logo.svg'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../../authContext'
 const Navbar = () => {
+  const { currentUser } = useAuth()
   return (
     <header className="bg-dark-700 fixed top-0 left-0 w-screen z-10">
       <div className="container flex justify-between mx-auto py-4">
@@ -9,12 +11,16 @@ const Navbar = () => {
           <h4 className="font-bold text-xl ml-3">DCompute</h4>
         </Link>
         <div className="grid gap-4 grid-cols-2 place-items-center">
-          <Link to="/" data-button="btn-primary-md">
-            Log In
-          </Link>
-          <Link to="/sign-up" data-button="btn-primary-md">
-            Sign Up
-          </Link>
+          {!currentUser && (
+            <>
+              <Link to="/log-in" data-button="btn-primary-md">
+                Log In
+              </Link>
+              <Link to="/sign-up" data-button="btn-primary-md">
+                Sign Up
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>
