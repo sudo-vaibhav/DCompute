@@ -2,6 +2,22 @@
 
 DCompute is a decentralised "Scientific Computation as a Service" platform that uses cutting edge technologies like blockchain and web assembly to beat the increasing costs of cloud computing in COVID times due to high load on cloud providers and global silicon shortages which inhibit access to virtual machines and local compute at a cheap rate. Scientists and researchers can upload their code on our platform and its then compiled to a WASM binary through our service for other nodes on the network to process and be rewarded for in exchange for their hardwork and resources in form of Celo Cryptocurrency.
 
+## Start Instructions
+
+to run the wasm backend do the following:
+
+```
+cd wasm
+npm run install && npm start
+```
+
+to run the react app do the following
+
+```
+cd react-app
+yarn install && yarn start
+```
+
 <a href="https://ibb.co/HChXvNL"><img src="https://i.ibb.co/2SZ5280/1.png" alt="1" ></a>
 <a href="https://ibb.co/jRVMsLd"><img src="https://i.ibb.co/16sqj93/2.png" alt="2" ></a>
 <a href="https://ibb.co/C6rbK9s"><img src="https://i.ibb.co/3vJpmFY/3.png" alt="3" ></a>
