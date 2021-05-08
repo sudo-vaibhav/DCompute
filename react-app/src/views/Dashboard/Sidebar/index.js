@@ -12,7 +12,7 @@ const Sidebar = () => {
         { icon: 'dollar-sign', text: 'Get Paid', to: 'jobs' },
         {
           icon: 'plus-circle',
-          text: 'Compute',
+          text: 'Deploy',
           to: 'deploy-job',
         },
         {
@@ -28,6 +28,7 @@ const Sidebar = () => {
       ].map((e) => {
         return (
           <NavLink
+            key={e.text}
             to={`/dashboard/${e.to}`}
             className="p-6 my-2 flex flex-col items-center"
             activeClassName="text-secondary-500  w-full border-l-4 border-secondary-500 "

@@ -28,7 +28,7 @@ const Jobs = () => {
                     Help me find the one billionth prime number. I need it for
                     my elliptic curve cyptography research paper
                   </p>
-                  <div className="flex justify-end">
+                  <div className="flex justify-between">
                     <button data-button="btn-primary-700-md ">Take On</button>
                   </div>
                 </div>

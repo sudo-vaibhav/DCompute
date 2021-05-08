@@ -1,4 +1,3 @@
-export function run(x: i32, y: i32): string {
-  return 'bhai bhai bhai'
-  // x + y
+export function run(x: i32, y: i32): i32 {
+  return x + y
 }
