@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const instance = axios.create({
-  baseURL: 'http://localhost:6868/',
+  baseURL: 'https://dcompute-wasm.azurewebsites.net/',
 })
 
 instance.interceptors.response.use(
