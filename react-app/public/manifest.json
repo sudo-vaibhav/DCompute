@@ -1,6 +1,6 @@
 {
-  "short_name": "React Tailwind App",
-  "name": "Create React Tailwind App Starter",
+  "short_name": "DCompute",
+  "name": "DCompute",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,9 +8,14 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo180.png",
+      "src": "logo192.png",
       "type": "image/png",
-      "sizes": "180x180"
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ],
   "start_url": ".",
