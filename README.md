@@ -18,6 +18,42 @@ cd react-app
 yarn install && yarn start
 ```
 
+## Tech-Stack
+
+- Firebase (for database)
+- React (for frontend)
+- Web Assembly
+- Celo developer SDK and web3 (for implementing payments)
+- NodeJS (for WASM compilation)
+- Lotte Files (for 2D animations)
+- ThreeJS and WebGL (for 3D animations)
+- TailwindCSS (for styling)
+- Figma (for designing)
+
+## Social Problems Solved
+
+- COVID-19 has disrupted supply chains in numerous industries.
+- Computer manufacturing facilities are running at fractional capacity.
+- Cloud data centres are witnessing their biggest upsurge ever.
+- GPUs and TPUs are in short supply, just like the silicon that's needed to manufacture them.
+- you can use the latent processing power among the different machines connected to the network and use it for intensive computations at lightning speed.
+- Task binaries can be served over the internet and can be run on any machine in exchange for cryptocurrency.
+- Optimised binaries can run orders of magnitudes faster than interpreted scripts. WASM wasn't a possibility a few years back. But its a global web standard now.
+- This can save researchers and scientists a lot of time and money as they can decentralise their workload without having to worry about monopolistic cloud providers or outages.
+- More compute power coming online can help accelerate the research for noble causes like COVID-19 cure development.
+
+## Applications
+
+- Scientists and researchers who want to run long running computation workloads but can't afford expensive cloud computers or don't want to deal with the complexity that cloud providers bring.
+- Cryptographers or mathematicians who want to run long calculations on computers but don't have access to them.
+- People with powerful laptops or GPUs who are willing to help others in exchange for a reward.
+- Anyone who wants to decentralise computational services and wants to contribute towards COVID-19 research.
+
+## Future
+
+- Currently, DCompute supports WASM generation through Assembly Script. In future, support for more methods like C++ or Rust.
+- Support for conventional payments apart from Celo can also be added through Razorpay.
+
 ## Screenshots
 <a href="https://ibb.co/sVfHrym"><img src="https://i.ibb.co/x7kHQJC/Screenshot-2021-05-09-at-5-37-58-AM.png" alt="Screenshot-2021-05-09-at-5-37-58-AM" border="0"></a>
 <a href="https://ibb.co/Jz3w5TF"><img src="https://i.ibb.co/tbLT86P/Screenshot-2021-05-09-at-5-38-50-AM.png" alt="Screenshot-2021-05-09-at-5-38-50-AM" border="0"></a>
