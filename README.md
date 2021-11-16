@@ -72,8 +72,5 @@ yarn install && yarn start
 <a href="https://ibb.co/dtcb8Ck"><img src="https://i.ibb.co/5k9Ybps/8.png" alt="8" ></a>
 
 ## Links
-
-React App : <a href="https://dcompute-16d7b.web.app/">https://dcompute-16d7b.web.app/</a><br/>
-WASM Backend: <a href="https://dcompute-wasm.azurewebsites.net">https://dcompute-wasm.azurewebsites.net</a><br/>
 Pitch Deck : <a href="https://www.canva.com/design/DAEd1IteQww/FOP_uQ159h8Uoz3M9_sClQ/view#1">https://www.canva.com/design/DAEd1IteQww/FOP_uQ159h8Uoz3M9_sClQ/view#1</a><br/>
 Demo Video: <a href="https://youtu.be/sl4qiD2YDw0">https://youtu.be/sl4qiD2YDw0</a>
